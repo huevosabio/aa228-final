@@ -4,7 +4,7 @@ function action = getArrowAction()
 
 k = waitforbuttonpress;
 f = gcf;
-val = double(get(f,'CurrentCharacter'))
+val = double(get(f,'CurrentCharacter'));
 
 if     val == 28
     action = [0 -1]; % deccelerate
@@ -14,6 +14,10 @@ elseif val == 30
     action = [1 0];  % 1 lane up
 elseif val == 31
     action = [-1 0]; % 1 lane down
+else
+    action = [0 0]; % no action
+    
+    fprintf('keystroke value = %s\n',num2str(val)) % see button press
 end
 
 end
