@@ -37,8 +37,12 @@ for t = 1:iterations
     
     %% call for new action, propogate cars, calc reward
     
-    % wait for action command, but only every actPeriod
+    % get action command, but only every actPeriod
     if mod(t*simPeriod,actPeriod) == 0
+        % calculate the relative state needed for MDP
+        state = getMDPState(agent, obstacles)
+        
+        % get an action, either by button press or MDP
 %         action = getArrowAction(); % HMI: arrow keys
         action = getNumAction(); % HMI: NumPad
 %         action = runForwardSearch()? % HMI: none
