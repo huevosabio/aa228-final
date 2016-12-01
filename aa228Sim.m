@@ -21,9 +21,9 @@ rewards = zeros(1, playTime/actPeriod);
 % open the 'AA228 Scoreboard' figure (score holds handle)
 [~, world, score] = drawWorld();
 % define a new set of random obstacles
-obstacles = updateObstacles();
+obstacles = updateObstacles(simPeriod);
 % define the agent
-agent = updateAgent();
+agent = updateAgent(simPeriod);
 
 %% move forward simPeriod seconds (actions only requested at actPeriods)
 for t = 1:iterations
@@ -41,12 +41,12 @@ for t = 1:iterations
     if mod(t*simPeriod,actPeriod) == 0
 %         action = getArrowAction(); % HMI: arrow keys
         action = getNumAction(); % HMI: NumPad
-%         action = runForwardSearch()?
+%         action = runForwardSearch()? % HMI: none
     end
     
     % propogate obstacles forward
-    obstacles = updateObstacles(obstacles); 
-    agent = updateAgent(agent,action);
+    obstacles = updateObstacles(simPeriod, obstacles ); 
+    agent = updateAgent(simPeriod, agent, action );
     
     % add the reward associated with this state-action
     if mod(t*simPeriod,actPeriod) == 0

@@ -40,11 +40,14 @@ elseif nargin > 0
     
 %%   3.
     % draw agent
+    % agent is 6m long and 3m wide
     rearRightPos = [ agent(1)-3 , 4*agent(2)+.5];
+    % add it to the end of the rectangles array
     rectangles(end) = rectangle('Position',[ rearRightPos , 6 , 3], 'FaceColor', 'b');
     
 end
 
+% make some adjustments to the size of figure
 xlim([0 1000])
 ylim([0 20])
 
@@ -56,4 +59,3 @@ if nargin == 0
 end
 
 end % EOF
-

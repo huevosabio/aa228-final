@@ -1,6 +1,6 @@
 function newReward = calcReward(action)
-%CALCREWARDS Summary of this function goes here
-%   Detailed explanation goes here
+%CALCREWARDS calculates the new reward for update in the scoreboad
+%   This function likely to become obsolete after defining Q
 
 switch action(2) % only operate on the acceleration for now
     case 1
