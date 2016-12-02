@@ -8,6 +8,9 @@ function [ obstacles ] = updateObstacles(simPeriod, obstacles, varargin)
 %           position in units of meters
 %
 %   Output: obstacles
+%
+% Contribtors: John
+%
 
 % constants
 numObs = 20;        % number of vehicles on our road
