@@ -54,7 +54,7 @@ for t = 1:iterations
     
     % add the reward associated with this state-action
     if mod(t*simPeriod,actPeriod) == 0
-        rewards(t*simPeriod/actPeriod) = rewards(max([1 (t*simPeriod/actPeriod-1)])) + calcReward(action);
+        rewards(t*simPeriod/actPeriod) = rewards(max([1 (t*simPeriod/actPeriod-1)])) + calcReward(state, action);
         figure(score);
         plot(rewards);
     end
