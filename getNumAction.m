@@ -1,6 +1,8 @@
 function action = getNumAction()
 %GETNUMACTION waits for the user to enter an action at the numPad
-
+%
+% Contribtors: John
+%
 k = waitforbuttonpress; % MATLAB won't proceed until a button is pressed
 f = gcf;
 val = double(get(f,'CurrentCharacter')); % map button press to a value

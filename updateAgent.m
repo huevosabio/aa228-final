@@ -1,6 +1,6 @@
 function agent = updateAgent( simPeriod, agent, action, varargin )
 %UPDATEAGENT Moves the agent according to its state and action
-
+%
 % Output:   agent 3 x 1 array
 %               [ longitudinal position, lane, velocity ]
 %               position in units of meters
@@ -9,6 +9,9 @@ function agent = updateAgent( simPeriod, agent, action, varargin )
 %           action 2 x 1 array
 %               [ change lane? , change speed?]
 %               +- 1 to adjust lane or speed
+%
+% Contribtors: John
+%
 
 % constants
 length = 1000;      % length of our track in meters

@@ -2,7 +2,9 @@ function [opt_action, opt_value] = selectAction(state, depth, simPeriod)
 %selectAction/forwardSearch
 % takes state s, and depth d
 %pseudo code from the book
-
+%
+% Contribtors: Molly
+%
 %%%%%% NOTES:
 %% availableActions-> we have so far only discussed the scenario where all actions are available, 
 %% and shortly mentioned the idea of making some actions unavailable, perhaps we should discuss this

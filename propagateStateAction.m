@@ -9,11 +9,13 @@ function [states, t_probs] = propagateStateAction(state, action, simPeriod)
 % Unlike the simulation, here we only update with regards to the nearby objects, we don't care for the rest
 % Code largely drawn from updateAgent
 % we might want to include the x and v states of our agent in the mdp as well
-
+%
+% Contribtors: Ramon
+%
 % empty thing
 [rows, cols] = size(state);
 t_probs{1} = 1.0;
-states{1} = NaN([rows, cols]);
+states{1} = NaN([rows, cols]); % Question: states is the next anticipated state? - John
 
 % update w.r.t. lane
 

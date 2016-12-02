@@ -8,7 +8,9 @@ function [rectangles, world, score, varargout] = drawWorld(obstacles, agent, rec
 %   4. Draw scoreboard
 %
 % units: 1 meter = 1 pixel
-
+%
+% Contribtors: John
+%
 if nargin == 0
 %%   1.    
 

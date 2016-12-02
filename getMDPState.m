@@ -12,8 +12,11 @@ function state = getMDPState(agent, obstacles)
 %       state (3 x nearObs+1)
 %           value 1,2 contains the agent's obsolute lane
 %           rows thereafter contain relative state info from agent to each obs:
-%           [ deltaLane, deltaPositon, deltaSpeed ]
+%           [ deltaPositon, deltaLane, deltaSpeed ]
 %           delta* = agent* - obstacle*
+%
+%
+% Contribtors: John
 %
 % constants
 trackLength = 1000;             % track length

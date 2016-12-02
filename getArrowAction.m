@@ -1,6 +1,9 @@
 function action = getArrowAction()
 %GETARRAWACTION Summary of this function goes here
 %   Detailed explanation goes here
+%
+% Contribtors: John
+%
 k = waitforbuttonpress;
 f = gcf;
 val = double(get(f,'CurrentCharacter'));
