@@ -21,7 +21,7 @@ dPosMax = 100;                   % only include obstacles less than 50m away
 numObs = size(obstacles,1);     % how many obstacles exist?
 
 % intialize state with a single row for agent's lane
-state = [ nan agent(2) nan ];
+state = [ agent(1) agent(2) agent(3) ];
 
 % loop over each obstacle to populate relative states
 for i = 1:numObs

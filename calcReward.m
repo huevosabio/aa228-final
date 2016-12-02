@@ -1,4 +1,4 @@
-function newReward = calcReward(action)
+function newReward = calcReward(state, action)
 %CALCREWARDS calculates the new reward for update in the scoreboad
 %   This function likely to become obsolete after defining Q
 
