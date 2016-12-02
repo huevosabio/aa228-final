@@ -20,7 +20,7 @@ function state = getMDPState(agent, obstacles)
 %
 % constants
 trackLength = 1000;             % track length
-dPosMax = 100;                   % only include obstacles less than 50m away
+dPosMax = 200;                   % only include obstacles less than 50m away
 numObs = size(obstacles,1);     % how many obstacles exist?
 
 % intialize state with a single row for agent's lane
