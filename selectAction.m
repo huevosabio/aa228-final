@@ -25,7 +25,7 @@ function [opt_action, opt_value] = selectAction(state, depth, simPeriod)
 %
 
 % gamma, not y
-y = 0.9
+y = 0.9;
 
 if depth == 0
 	% end of the search
@@ -42,7 +42,7 @@ opt_value = -inf;
 available_actions = getAvailableActions(state);
 [nactions, columns] = size(available_actions);
 for aidx = 1:nactions
-	action = a(aidx, :);
+	action = available_actions(aidx, :);
 	value = calcReward(state, action);
 	[reachable_states, t_probs] = propagateStateAction(state, action, simPeriod);
 	[~, nstates] = size(reachable_states);
@@ -56,5 +56,4 @@ for aidx = 1:nactions
 		opt_value = value;
 	end
 end
-
 end
