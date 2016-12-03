@@ -13,7 +13,7 @@ function [ obstacles ] = updateObstacles(simPeriod, obstacles, varargin)
 %
 
 % constants
-numObs = 20;        % number of vehicles on our road
+numObs = 30;        % number of vehicles on our road
 length = 1000;      % length of our track in meters
 lanes = 3;          % number of lanes in our road
 aveV = 20;          % average speed of vehicles on the road
