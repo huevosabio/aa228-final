@@ -13,6 +13,7 @@ playTime = 60;          % How many seconds to play a round?
 iterations = 60/.05;    % How many simPeriod rounds do we want to run?
 clear obstacles;        % forget last sim's obstacles
 action = [0 0];         % initialize action to 'do nothing'
+depth = 3;
 % init rewards history vector, one entry for 2 sec time step
 rewards = zeros(1, playTime/actPeriod);
 
@@ -44,7 +45,8 @@ for t = 1:iterations
         
         % get an action, either by button press or MDP
 %         action = getArrowAction(); % HMI: arrow keys
-        action = getNumAction(); % HMI: NumPad
+        %action = getNumAction(); % HMI: NumPad
+        action = selectAction(state, depth, simPeriod);
 %         action = runForwardSearch()? % HMI: none
     end
     
