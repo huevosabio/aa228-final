@@ -5,7 +5,7 @@ function availableActions = getAvailableActions(state)
 % Agreed. This may need to become more complex to limit lane changes off the road - John
 % What's going on with the action comments below?? - John
 %
-% Contribtors: Ramon, John
+% Contribtors: Ramon, John, Molly
 %
 
 % switch on the current lane of the agent
