@@ -18,7 +18,7 @@ trackLength = 1000;                 % length of track in meters
 lanes = 3;                          % number of lanes in our road
 aveV = 20;                          % average speed of vehicles on the road
 sigmaV = 5;                         % deviation of speeds of vehicles on the road
-setUpMode = 2;                      %   1: random instruders;
+setUpMode = 1;                      %   1: random instruders;
                                     %   2: intruders init according to matrix defineIntruders
 defineIntruders = [ 200, 1, 0;...   
                     200, 2, 0];     % 2 non-moving intruders - needs to change lane twice

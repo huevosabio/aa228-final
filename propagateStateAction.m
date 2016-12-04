@@ -35,7 +35,8 @@ if rows > 1 % counting the case where there are no intruders
 	% update diff in lanes
 	states{1}(2:end,2) = state(2:end,2) + action(1);
 	% updates diff in position
-	states{1}(2:end,1) = state(2:end,1) + states{1}(2:end,2) * actPeriod; % no need to safe guard for end of track
+        % BUG?!                                           2?
+	states{1}(2:end,1) = state(2:end,1) + states{1}(2:end,3) * actPeriod; % no need to safe guard for end of track
 end
 
 end

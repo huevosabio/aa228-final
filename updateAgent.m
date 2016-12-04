@@ -16,7 +16,7 @@ function agent = updateAgent( simPeriod, agent, action, varargin )
 % constants
 length = 1000;      % length of our track in meters
 lanes = 3;          % number of lanes in road
-v = 20;             % initial speed of agent
+v = 30;             % initial speed of agent
 x = 100;            % initial position of agent
 l = 1;              % initial lane of agent
 
