@@ -1,4 +1,4 @@
-function newReward = calcReward(state, action)
+function newReward = calcReward(state, action, sim)
 %CALCREWARDS calculates the new reward for update in the scoreboad and for
 %use in selectAction
 %
@@ -25,14 +25,20 @@ crashReward = -100;             % dominating cost for crashing
 changeLaneReward = -1;          % minor cost to change lane
 accelerateReward = 2;           % incentive to accelerate
 decelerateReward = -1;          % minor cost to decelerate
+carLength = 6;
 
 %% loop over each intruder to find crashes
 for i = 1:intruders
     % if deltaPos_1 * deltaPos_2 < 0,
     % and deltaLane + laneChangeAction == 0, agent and intruder crashed
-    if state(i+1,1)*(state(i+1,1) + actPeriod*state(i+1,3)) <= 0 ...
-                                        && state(i+1,2) + action(1) == 0
+    if (state(i+1,1)*(state(i+1,1) + actPeriod*state(i+1,3)) <= 0 ...
+                                        & state(i+1,2) + action(1) == 0) ...
+                                        | (abs(state(i+1,1)) - carLength <= 0 ...
+                                        | abs(state(i+1,1) + actPeriod*state(i+1,3)) - carLength <= 0)
         newReward = newReward + crashReward;
+        if sim == 1
+        	'crash'
+        end
     end
 end
 
