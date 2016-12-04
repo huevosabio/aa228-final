@@ -13,19 +13,19 @@ function [ obstacles ] = updateObstacles(simPeriod, obstacles, varargin)
 %
 
 %% constants
-numObs = 20;                        % number of vehicles on our road
+numObs = 60;                        % number of vehicles on our road
 trackLength = 1000;                 % length of track in meters
 lanes = 3;                          % number of lanes in our road
 aveV = 20;                          % average speed of vehicles on the road
 sigmaV = 5;                         % deviation of speeds of vehicles on the road
-setUpMode = 2;                      %   1: random instruders;
+setUpMode = 1;                      %   1: random instruders;
                                     %   2: intruders init according to matrix defineIntruders
 %defineIntruders = [ 100, 1, 0;...   
 %                    100, 2, 0];     % 2 non-moving intruders - needs to change lane twice
 defineIntruders = [ 150, 1, 0;...   
                     150, 2, 0;...
                     160, 1, 0;...
-                    160, 2, 0];     % 2 non-moving intruders - needs to change lane twice
+                    160, 2, 0];     % choose between two crashes
 %defineIntruders = [ 100, 3, 0];     % 1 obstacle, outta the way                 
 
 %% If obstacles not passed in, must be created for the beginning of simulation:
