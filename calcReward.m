@@ -25,13 +25,17 @@ crashReward = -100;             % dominating cost for crashing
 changeLaneReward = -1;          % minor cost to change lane
 accelerateReward = 2;           % incentive to accelerate
 decelerateReward = -1;          % minor cost to decelerate
+carLength = 6;
 
 %% loop over each intruder to find crashes
 for i = 1:intruders
     % if deltaPos_1 * deltaPos_2 < 0,
     % and deltaLane + laneChangeAction == 0, agent and intruder crashed
-    if state(i+1,1)*(state(i+1,1) + actPeriod*state(i+1,3)) <= 0 ...
-                                        && state(i+1,2) + action(1) == 0
+    % x = (1/2)a * t^2 + v * t + x
+    dx1 = state(i+1,1);
+    dx2 = state(i+1,1) + actPeriod*state(i+1,3) + .5 * action(2) * actPeriod^2;
+    if (dx1*dx2 <= 0 & state(i+1,2) + action(1) == 0) ...
+        | (abs(dx1) - carLength < 0 | abs(dx2) - carLength < 0)
         newReward = newReward + crashReward;
     end
 end

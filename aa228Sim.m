@@ -1,3 +1,4 @@
+
 % AA228SIM
 %
 % Run to our Forward Search MPD algorithm and simulation
@@ -26,6 +27,9 @@ obstacles = updateObstacles(simPeriod);
 % define the agent
 agent = updateAgent(simPeriod);
 
+% immediately select the first action
+state = getMDPState(agent, obstacles)
+[action, anticipatedReward] = selectAction(state, depth, actPeriod)
 %% move forward simPeriod seconds (actions only requested at actPeriods)
 for t = 1:iterations
     %% Draw the obstacles and agents at this period's locations
@@ -45,11 +49,11 @@ for t = 1:iterations
         
         % get an action, either by button press or MDP
 %         action = getNumAction(); % HMI: NumPad
-        action = selectAction(state, depth, actPeriod); % Forward Search
+        [action, anticipatedReward] = selectAction(state, depth, actPeriod) % Forward Search
     end
     
     % propogate obstacles forward
-    obstacles = updateObstacles(simPeriod, obstacles ); 
+    obstacles = updateObstacles(simPeriod, obstacles );
     agent = updateAgent(simPeriod, agent, action );
     
     % add the reward associated with this state-action

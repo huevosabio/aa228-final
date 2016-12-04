@@ -3,7 +3,7 @@ function [opt_action, opt_value] = selectAction(state, depth, actPeriod)
 % takes state s, and depth d
 %pseudo code from the book
 %
-% Contribtors: Molly
+% Contribtors: Molly, Ramon
 %
 %%%%%% NOTES:
 %% availableActions-> we have so far only discussed the scenario where all actions are available, 
@@ -24,10 +24,9 @@ function [opt_action, opt_value] = selectAction(state, depth, actPeriod)
 %		if v > v*:
 %			(a*, v*) = (a,v)
 %	return (a*,v*)
-%
 
 % gamma, not y
-y = 0.9;
+y = 1;
 
 if depth == 0
 	% end of the search
@@ -42,7 +41,7 @@ opt_value = -inf;
 
 %iterate over available actions and states
 available_actions = getAvailableActions(state);
-[nactions, columns] = size(available_actions);
+[nactions, ~] = size(available_actions);
 for aidx = 1:nactions
 	action = available_actions(aidx, :);
 	value = calcReward(state, action);
@@ -50,6 +49,8 @@ for aidx = 1:nactions
 	[~, nstates] = size(reachable_states);
 	for sidx = 1:nstates
 		next_state = reachable_states{sidx};
+        % shouldn't next_action get used somewhere or no? - John
+        % not really, in this loop we are only interested in the values
 		[next_action, next_value] = selectAction(next_state, depth - 1, actPeriod);
 		value = value + y * t_probs{sidx} * next_value;
 	end
