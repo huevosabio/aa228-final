@@ -1,4 +1,4 @@
-function [opt_action, opt_value] = selectAction(state, depth, simPeriod)
+function [opt_action, opt_value] = selectAction(state, depth, actPeriod)
 %selectAction/forwardSearch
 % takes state s, and depth d
 %pseudo code from the book
@@ -46,11 +46,11 @@ available_actions = getAvailableActions(state);
 for aidx = 1:nactions
 	action = available_actions(aidx, :);
 	value = calcReward(state, action);
-	[reachable_states, t_probs] = propagateStateAction(state, action, simPeriod);
+	[reachable_states, t_probs] = propagateStateAction(state, action, actPeriod);
 	[~, nstates] = size(reachable_states);
 	for sidx = 1:nstates
 		next_state = reachable_states{sidx};
-		[next_action, next_value] = selectAction(next_state, depth - 1, simPeriod);
+		[next_action, next_value] = selectAction(next_state, depth - 1, actPeriod);
 		value = value + y * t_probs{sidx} * next_value;
 	end
 	if value > opt_value
