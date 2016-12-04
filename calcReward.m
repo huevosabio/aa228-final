@@ -34,8 +34,8 @@ for i = 1:intruders
     % x = (1/2)a * t^2 + v * t + x
     dx1 = state(i+1,1);
     dx2 = state(i+1,1) + actPeriod*state(i+1,3) + .5 * action(2) * actPeriod^2;
-    if (dx1*dx2 <= 0 & state(i+1,2) + action(1) == 0) ...
-        | (abs(dx1) - carLength < 0 | abs(dx2) - carLength < 0)
+    sameLane = state(i+1,2) + action(1) == 0;
+    if sameLane & ((dx1*dx2 <= 0) | (abs(dx1) - carLength < 0 | abs(dx2) - carLength < 0))
         newReward = newReward + crashReward;
     end
 end
