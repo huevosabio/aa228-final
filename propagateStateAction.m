@@ -10,18 +10,20 @@ function [states, t_probs] = propagateStateAction(state, action, simPeriod)
 % Code largely drawn from updateAgent
 % we might want to include the x and v states of our agent in the mdp as well
 %
-% Contribtors: Ramon
+% Contribtors: Ramon, Molly
 %
 % empty thing
 [rows, cols] = size(state);
-t_probs{1} = 1.0;
-states{1} = NaN([rows, cols]); % Question: states is the next anticipated state? - John
+t_probs{1} = 1.0;                   % deterministic, for now
+states{1} = NaN([rows, cols]);
 
+%% Update Agent (first row of state)
 % update w.r.t. lane
 
 states{1}(1,2) = max(min(4, state(1,2) + action(1)), 1); % don't go outside of road - or maybe allow grass?
 dL = states{1}(1,2) - state(1,2); %effective change (this should be cleaner)
 
+%% Update Relative States
 if rows > 1 % counting the case where there are no intruders
 	% update diff in velocities
 	states{1}(2:end,3) = state(2:end,3) + action(2); % DOES NOT PROHIBIT GOING IN REVERSE!
