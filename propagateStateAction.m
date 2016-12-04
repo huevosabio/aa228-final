@@ -1,4 +1,4 @@
-function [states, t_probs] = propagateStateAction(state, action, simPeriod)
+function [states, t_probs] = propagateStateAction(state, action, actPeriod)
 %propagateStateAction
 % given a state and an action, it simulates one time step and returns the likely next states
 % the new states 
@@ -18,19 +18,24 @@ t_probs{1} = 1.0;                   % deterministic, for now
 states{1} = NaN([rows, cols]);
 
 %% Update Agent (first row of state)
+% update w.r.t. speed
+states{1}(1,3) = state(1,3) + action(2);
+% update w.r.t. xPos
+states{1}(1,1) = state(1,1) + actPeriod*state(1,3);
 % update w.r.t. lane
-
-states{1}(1,2) = max(min(4, state(1,2) + action(1)), 1); % don't go outside of road - or maybe allow grass?
-dL = states{1}(1,2) - state(1,2); %effective change (this should be cleaner)
+states{1}(1,2) = state(1,2) + action(1);
+% line below not necessary, because getAvailableActions limits lane change options
+% states{1}(1,2) = max(min(4, state(1,2) + action(1)), 1); % don't go outside of road - or maybe allow grass?
+% dL = states{1}(1,2) - state(1,2); %effective change (this should be cleaner)
 
 %% Update Relative States
 if rows > 1 % counting the case where there are no intruders
 	% update diff in velocities
 	states{1}(2:end,3) = state(2:end,3) + action(2); % DOES NOT PROHIBIT GOING IN REVERSE!
 	% update diff in lanes
-	states{1}(2:end,2) = state(2:end,2) + dL; % safe guarded against grassy territory
+	states{1}(2:end,2) = state(2:end,2) + action(1);
 	% updates diff in position
-	states{1}(2:end,1) = state(2:end,1) + states{1}(2:end,2) * simPeriod; % no need to safe guard for end of track
+	states{1}(2:end,1) = state(2:end,1) + states{1}(2:end,2) * actPeriod; % no need to safe guard for end of track
 end
 
 end
