@@ -16,9 +16,9 @@ function agent = updateAgent( simPeriod, agent, action, varargin )
 % constants
 length = 1000;      % length of our track in meters
 lanes = 3;          % number of lanes in road
-v = 40;             % initial speed of agent
+v = 20;             % initial speed of agent
 x = 100;            % initial position of agent
-l = 2;              % initial lane of agent
+l = 1;              % initial lane of agent
 
 %   If no input args, initialize the agent
 if nargin == 1
@@ -42,7 +42,7 @@ else % must have agent and action input
         agent(3) = 0; % don't move backwards
     end
     
-    % update agent state
+    % update agent longitudinal position
     agent(1) = agent(1) + agent(3)*simPeriod;
     if agent(1) > 1000 % if agent goes beyond the track
         agent(1) = agent(1) - 1000; % send to beginning
