@@ -1,4 +1,4 @@
-function newReward = calcReward(state, action, sim)
+function newReward = calcReward(state, action)
 %CALCREWARDS calculates the new reward for update in the scoreboad and for
 %use in selectAction
 %
@@ -38,7 +38,6 @@ for i = 1:intruders
         | (abs(dx1) - carLength < 0 | abs(dx2) - carLength < 0)
         newReward = newReward + crashReward;
         if sim == 1
-        	'crash'
         end
     end
 end
