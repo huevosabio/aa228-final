@@ -37,8 +37,6 @@ for i = 1:intruders
     if (dx1*dx2 <= 0 & state(i+1,2) + action(1) == 0) ...
         | (abs(dx1) - carLength < 0 | abs(dx2) - carLength < 0)
         newReward = newReward + crashReward;
-        if sim == 1
-        end
     end
 end
 

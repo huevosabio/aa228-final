@@ -27,6 +27,9 @@ obstacles = updateObstacles(simPeriod);
 % define the agent
 agent = updateAgent(simPeriod);
 
+% immediately select the first action
+state = getMDPState(agent, obstacles)
+[action, anticipatedReward] = selectAction(state, depth, actPeriod)
 %% move forward simPeriod seconds (actions only requested at actPeriods)
 for t = 1:iterations
     %% Draw the obstacles and agents at this period's locations
