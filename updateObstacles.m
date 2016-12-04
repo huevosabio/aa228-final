@@ -12,28 +12,37 @@ function [ obstacles ] = updateObstacles(simPeriod, obstacles, varargin)
 % Contribtors: John
 %
 
-% constants
-numObs = 20;        % number of vehicles on our road
-length = 1000;      % length of our track in meters
-lanes = 3;          % number of lanes in our road
-aveV = 20;          % average speed of vehicles on the road
-sigmaV = 5;         % deviation of speeds of vehicles on the road
+%% constants
+numObs = 20;                        % number of vehicles on our road
+trackLength = 1000;                 % length of track in meters
+lanes = 3;                          % number of lanes in our road
+aveV = 20;                          % average speed of vehicles on the road
+sigmaV = 5;                         % deviation of speeds of vehicles on the road
+setUpMode = 2;                      %   1: random instruders; 
+defineIntruders = [ 200, 1, 0;...       2: intruders init according to matrix defineIntruders
+                    200, 2, 0];     % each row with 3 params: xPos, lane, speed
 
-% If obstacles not passed in, must be created for the beginning of simulation:
+%% If obstacles not passed in, must be created for the beginning of simulation:
 if nargin == 1
-    % intitialize obstacles matrix
-    obstacles = nan(numObs,3);
-    % calculate the vehicles speeds, each distributed normally
-    normV = normrnd(aveV,sigmaV,numObs);
-    for i = 1:numObs
-       % populate with positions and speeds
-       obstacles(i,1) = rand*length;
-       obstacles(i,2) = randi(lanes);
-       obstacles(i,3) = abs(normV(i)); %no negative speeds
+    % initialize intruders according to setUpMode
+    if setUpMode == 1 % numObs random intruders
+        % intitialize obstacles matrix
+        obstacles = nan(numObs,3);
+        % calculate the vehicles speeds, each distributed normally
+        normV = normrnd(aveV,sigmaV,numObs);
+        for i = 1:numObs
+           % populate with positions and speeds
+           obstacles(i,1) = rand*trackLength;
+           obstacles(i,2) = randi(lanes);
+           obstacles(i,3) = abs(normV(i)); %no negative speeds
+        end
+    elseif setUpMode == 2 % obstacles exactly as written to defineIntruders
+        obstacles = defineIntruders;
     end
-% If obstacles is passed in, push them forward according to their speeds
+    
+% If 'obstacles' is passed in, push them forward according to their speeds
 else
-    for i = 1:numObs
+    for i = 1:size(obstacles,1)
         % propogate longitudinal postion according to speed
         obstacles(i,1) = obstacles(i,1) + simPeriod*obstacles(i,3);
         % if vehicle goes beyond the track
