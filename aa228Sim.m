@@ -1,3 +1,4 @@
+
 % AA228SIM
 %
 % Run to our Forward Search MPD algorithm and simulation
@@ -13,7 +14,7 @@ playTime = 60;          % How many seconds to play a round?
 iterations = 60/.05;    % How many simPeriod rounds do we want to run?
 clear obstacles;        % forget last sim's obstacles
 action = [0 0];         % initialize action to 'do nothing'
-depth = 4;              % depth of Forward Search
+depth = 5;              % depth of Forward Search
 % init rewards history vector, one entry for 2 sec time step
 rewards = zeros(1, playTime/actPeriod);
 
@@ -26,6 +27,9 @@ obstacles = updateObstacles(simPeriod);
 % define the agent
 agent = updateAgent(simPeriod);
 
+% immediately select the first action
+state = getMDPState(agent, obstacles)
+[action, anticipatedReward] = selectAction(state, depth, actPeriod)
 %% move forward simPeriod seconds (actions only requested at actPeriods)
 for t = 1:iterations
     %% Draw the obstacles and agents at this period's locations

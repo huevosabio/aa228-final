@@ -50,6 +50,7 @@ for aidx = 1:nactions
 	for sidx = 1:nstates
 		next_state = reachable_states{sidx};
         % shouldn't next_action get used somewhere or no? - John
+        % not really, in this loop we are only interested in the values
 		[next_action, next_value] = selectAction(next_state, depth - 1, actPeriod);
 		value = value + y * t_probs{sidx} * next_value;
 	end

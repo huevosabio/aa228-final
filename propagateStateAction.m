@@ -18,10 +18,10 @@ t_probs{1} = 1.0;                   % deterministic, for now
 states{1} = NaN([rows, cols]);
 
 %% Update Agent (first row of state)
-% update w.r.t. speed
-states{1}(1,3) = state(1,3) + action(2);
 % update w.r.t. xPos
-states{1}(1,1) = state(1,1) + actPeriod*state(1,3);
+states{1}(1,1) = state(1,1) + actPeriod*state(1,3) + 0.5 * action(2) * actPeriod^2;
+% update w.r.t. speed
+states{1}(1,3) = state(1,3) + action(2)*actPeriod;
 % update w.r.t. lane
 states{1}(1,2) = state(1,2) + action(1);
 % line below not necessary, because getAvailableActions limits lane change options
