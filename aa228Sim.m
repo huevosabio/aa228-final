@@ -45,7 +45,7 @@ for t = 1:iterations
         
         % get an action, either by button press or MDP
 %         action = getNumAction(); % HMI: NumPad
-        action = selectAction(state, depth, simPeriod); % Forward Search
+        action = selectAction(state, depth, actPeriod); % Forward Search
     end
     
     % propogate obstacles forward
