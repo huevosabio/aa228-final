@@ -1,4 +1,12 @@
 function availableActions = getAvailableActions(state)
+%
+% we should modify this if we think we want to include state dependent action set.
+%
+% Agreed. This may need to become more complex to limit lane changes off the road - John
+% What's going on with the action comments below?? - John
+%
+% Contribtors: Ramon, John, Molly
+%
 
 % Contribtors: Ramon, John, Molly
 

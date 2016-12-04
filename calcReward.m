@@ -14,7 +14,7 @@ function newReward = calcReward(state, action)
 %       action: 1 x 2 array
 %           [ changeLane, changeSpeed ]
 %
-% Contributors: John, Ramon
+% Contributors: John, Ramon, Molly
 %
 
 %% constants and initializations
