@@ -1,5 +1,4 @@
 function availableActions = getAvailableActions(state)
-<<<<<<< HEAD
 %
 % we should modify this if we think we want to include state dependent action set.
 %
@@ -8,10 +7,8 @@ function availableActions = getAvailableActions(state)
 %
 % Contribtors: Ramon, John, Molly
 %
-=======
 
 % Contribtors: Ramon, John, Molly
->>>>>>> origin/master
 
 % switch on the current lane of the agent
 switch state(1,2)
