@@ -13,7 +13,7 @@ playTime = 60;          % How many seconds to play a round?
 iterations = 60/.05;    % How many simPeriod rounds do we want to run?
 clear obstacles;        % forget last sim's obstacles
 action = [0 0];         % initialize action to 'do nothing'
-depth = 3;
+depth = 5;
 % init rewards history vector, one entry for 2 sec time step
 rewards = zeros(1, playTime/actPeriod);
 
@@ -58,7 +58,7 @@ for t = 1:iterations
     if mod(t*simPeriod,actPeriod) == 0
         rewards(t*simPeriod/actPeriod) = rewards(max([1 (t*simPeriod/actPeriod-1)])) + calcReward(state, action);
         figure(score);
-        plot(rewards);
+        plot(rewards,'LineWidth',2);
     end
     
     %% cleanup before the end of this iteration
