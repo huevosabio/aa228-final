@@ -1,4 +1,4 @@
-function [states, t_probs] = propagateStateAction(state, action, simPeriod)
+function [states, t_probs] = propagateStateAction(state, action, actPeriod)
 %propagateStateAction
 % given a state and an action, it simulates one time step and returns the likely next states
 % the new states 
@@ -28,7 +28,7 @@ if rows > 1 % counting the case where there are no intruders
 	% update diff in lanes
 	states{1}(2:end,2) = state(2:end,2) + dL; % safe guarded against grassy territory
 	% updates diff in position
-	states{1}(2:end,1) = state(2:end,1) + states{1}(2:end,2) * simPeriod; % no need to safe guard for end of track
+	states{1}(2:end,1) = state(2:end,1) + states{1}(2:end,2) * actPeriod; % no need to safe guard for end of track
 end
 
 end
