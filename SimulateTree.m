@@ -28,20 +28,25 @@ statecell=num2cell(state,[1,2]);       % make states into one cell
 
 if depth == 0
 	% end of the search
-	return 0
+	q=0;
 end
 
 if  any(ismember(statecell,T))==0   % if state not in T
-%iterate over available actions
 available_actions = getAvailableActions(state);
 [nactions, columns] = size(available_actions);
-for aidx = 1:nactions
-	action = available_actions(aidx, :);
-    N0=0;
-    Q0=calcReward(state,action);
-    N=N0;
-    Q=Q0;
-    T=[T;statecell]   %expansion: add the current state to set T
-	return Rollout(s,d,pi0)
+    Ns=Ns+1;
+%iterate over available actions
+    for aidx = 1:nactions
+	    action = available_actions(aidx, :);
+        N0=0;
+        Q0=calcReward(state,action);
+        N=N0;
+        Q=Q0;
+        T=[T;statecell];   %expansion: add the current state to set T
+	    q=Rollout(state,depth,actPeriod)
+    end
+end
+
+maximizevalue=Q+c*sqrt(log(N)/N)
 
 end
