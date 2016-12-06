@@ -13,13 +13,13 @@ function [ obstacles ] = updateObstacles(simPeriod, obstacles, varargin)
 %
 
 %% constants
-numObs = 20;                        % number of vehicles on our road
+numObs = 30;                        % number of vehicles on our road
 trackLength = 1000;                 % length of track in meters
 lanes = 3;                          % number of lanes in our road
 aveV = 20;                          % average speed of vehicles on the road
 sigmaV = 5;                         % deviation of speeds of vehicles on the road
-setUpMode = 2;                      %   1: random instruders;
-randomAction = 0;                  % 0 if obstacles keep their velocity, 1 if they choose an action at random
+setUpMode = 1;                      %   1: random instruders;
+randomActionProb = 0.9;                   % Probability that it will execute a random action, set 0.0 to make it deterministic
                                     %   2: intruders init according to matrix defineIntruders
 %defineIntruders = [ 100, 1, 0;...   
 %                    100, 2, 0];     % 2 non-moving intruders - needs to change lane twice
@@ -56,6 +56,7 @@ if nargin == 1
 % If 'obstacles' is passed in, push them forward according to their speeds
 else
     for i = 1:size(obstacles,1)
+        % if 
         % propogate longitudinal postion according to speed
         obstacles(i,1) = obstacles(i,1) + simPeriod*obstacles(i,3);
         % if vehicle goes beyond the track
