@@ -1,22 +1,21 @@
 
 % AA228SIM
 %
-% Run to our Forward Search MPD algorithm and simulation
+% Run to start our Forward Search MPD algorithm and simulation
 %
 % Authors: John, Molly, and Ramon
 
-close all; % reset the game and all figures
+close all;          % reset the game and all figures
+clear obstacles;    % forget last sim's obstacles
 
 %% Constants and variables
-simPeriod = .05;        % 10 msec, length of time between dynamic sims
-actPeriod = 2;          % 2 sec, take an action every 2 seconds
-playTime = 60;          % How many seconds to play a round?
-iterations = 60/.05;    % How many simPeriod rounds do we want to run?
-clear obstacles;        % forget last sim's obstacles
-action = [0 0];         % initialize action to 'do nothing'
-depth = 5;              % depth of Forward Search
-% init rewards history vector, one entry for 2 sec time step
-rewards = zeros(1, playTime/actPeriod);
+simPeriod = .05;                    % 10 msec, length of time between dynamic sims
+actPeriod = 2;                      % 2 sec, take an action every 2 seconds
+playTime = 10;                      % How many seconds to play a round?
+SIMiters = playTime/simPeriod;      % How many simPeriods will we run?
+MDPiters = playTime/actPeriod;      % How many MDP decisions will we make?
+depth = 4;                          % depth of Forward Search
+rewards = 0;                        % init rewards history vector, one entry for 2 sec time step
 
 %% Initialize the simulation
 % open the 'AA228 Road' figure and draw the road (world holds handle)
@@ -27,11 +26,18 @@ obstacles = updateObstacles(simPeriod);
 % define the agent
 agent = updateAgent(simPeriod);
 
-% immediately select the first action
-state = getMDPState(agent, obstacles)
-[action, anticipatedReward] = selectAction(state, depth, actPeriod)
+%% Data To Be Saved
+absStateHist = nan(SIMiters*(1+size(obstacles,1)),3);   % all states over simulation
+actionHist = nan(MDPiters,2);                           % all actions
+rewardHist = nan(MDPiters,1);                           % all rewards
+
 %% move forward simPeriod seconds (actions only requested at actPeriods)
-for t = 1:iterations
+MDPiteration = 0; % index for action / reward arrays, increments every actPeriod
+for t = 0:SIMiters-1
+    %% Save the state at beginning of iteration
+    absStateHist( 1 + (t)*(1+size(obstacles,1)) : ...
+                  1 + (t)*(1+size(obstacles,1)) + size(obstacles,1), : ) = [agent; obstacles];
+    
     %% Draw the obstacles and agents at this period's locations
     % intialize rects graphics array to contain cars
     rectangles = gobjects(size(obstacles,1)+1);
@@ -44,12 +50,16 @@ for t = 1:iterations
     
     % get action command, but only every actPeriod
     if mod(t*simPeriod,actPeriod) == 0
+        MDPiteration = MDPiteration + 1;
         % calculate the relative state needed for MDP
         state = getMDPState(agent, obstacles)
         
         % get an action, either by button press or MDP
 %         action = getNumAction(); % HMI: NumPad
         [action, anticipatedReward] = selectAction(state, depth, actPeriod) % Forward Search
+        
+        % Save action
+        actionHist(MDPiteration,:) = action;
     end
     
     % propogate obstacles forward
@@ -58,9 +68,15 @@ for t = 1:iterations
     
     % add the reward associated with this state-action
     if mod(t*simPeriod,actPeriod) == 0
-        rewards(t*simPeriod/actPeriod) = rewards(max([1 (t*simPeriod/actPeriod-1)])) + calcReward(state, action);
+        newReward = calcReward(state, action);
+        
+        % for scoreboard graphic only
+        rewards = [ rewards, rewards(end)+newReward ];
         figure(score);
         plot(rewards,'LineWidth',2);
+        
+        % save reward
+        rewardHist(MDPiteration) = newReward;
     end
     
     %% cleanup before the end of this iteration
@@ -68,4 +84,21 @@ for t = 1:iterations
     delete(rectangles);
     % reset action until next 2 second period.
     action = [0 0];
+    
 end
+
+%% Save Data
+AA228MDP_data = struct('Absolute_State_History', absStateHist,...
+                       'Action_History',         actionHist,...
+                       'Reward_History',         rewardHist);
+% check to see if filename already exists!
+name = 'AA228MDP_data_';
+index = 1;
+indexChar = int2str(index);
+while exist(strcat(name,indexChar,'.mat')) == 2
+    index = index+1;
+    indexChar = int2str(index);
+end
+save(strcat(name,indexChar),'AA228MDP_data');
+                   
+

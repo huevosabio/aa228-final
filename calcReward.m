@@ -24,7 +24,7 @@ actPeriod = 2;                  % should we pass this in?
 crashReward = -100;             % dominating cost for crashing
 changeLaneReward = -1;          % minor cost to change lane
 accelerateReward = 2;           % incentive to accelerate
-decelerateReward = -1;          % minor cost to decelerate
+decelerateReward = -1;          % -1 per deceleration unit
 carLength = 6;
 
 %% loop over each intruder to find crashes
