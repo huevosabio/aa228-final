@@ -45,11 +45,11 @@ for t = 1:iterations
     % get action command, but only every actPeriod
     if mod(t*simPeriod,actPeriod) == 0
         % calculate the relative state needed for MDP
-        state = getMDPState(agent, obstacles)
+        state = getMDPState(agent, obstacles);
         
         % get an action, either by button press or MDP
 %         action = getNumAction(); % HMI: NumPad
-        [action, anticipatedReward] = selectAction(state, depth, actPeriod) % Forward Search
+        [action, anticipatedReward] = selectAction(state, depth, actPeriod); % Forward Search
     end
     
     % propogate obstacles forward
@@ -58,6 +58,7 @@ for t = 1:iterations
     
     % add the reward associated with this state-action
     if mod(t*simPeriod,actPeriod) == 0
+        calcReward(state, action)
         rewards(t*simPeriod/actPeriod) = rewards(max([1 (t*simPeriod/actPeriod-1)])) + calcReward(state, action);
         figure(score);
         plot(rewards,'LineWidth',2);
@@ -67,5 +68,7 @@ for t = 1:iterations
     % remove the cars before proceeding to the next iteration
     delete(rectangles);
     % reset action until next 2 second period.
-    action = [0 0];
+    %action = [0 0];
+    % reset lane action until next 2 second period
+    action(1) = 0;
 end
