@@ -19,6 +19,7 @@ lanes = 3;                          % number of lanes in our road
 aveV = 20;                          % average speed of vehicles on the road
 sigmaV = 5;                         % deviation of speeds of vehicles on the road
 setUpMode = 1;                      %   1: random instruders;
+randomActions = 0                   % 0 if obstacles keep their velocity, 1 if they choose an action at random
                                     %   2: intruders init according to matrix defineIntruders
 %defineIntruders = [ 100, 1, 0;...   
 %                    100, 2, 0];     % 2 non-moving intruders - needs to change lane twice
