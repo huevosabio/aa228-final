@@ -32,11 +32,11 @@ assert(reward == 2);
 %test bumper crash after action
 state = [nan 1 nan; -7 0 0];
 action = [0 1];
-reward = calcReward(state, action)
+reward = calcReward(state, action);
 assert(reward == -98);
 
 %test overpass crash after action
 state = [nan 1 nan; -9 0 0];
 action = [0 9];
-reward = calcReward(state, action)
+reward = calcReward(state, action);
 assert(reward == -82);

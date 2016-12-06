@@ -11,7 +11,7 @@ clear obstacles;    % forget last sim's obstacles
 %% Constants and variables
 simPeriod = .05;                    % 10 msec, length of time between dynamic sims
 actPeriod = 2;                      % 2 sec, take an action every 2 seconds
-playTime = 10;                      % How many seconds to play a round?
+playTime = 100;                      % How many seconds to play a round?
 SIMiters = playTime/simPeriod;      % How many simPeriods will we run?
 MDPiters = playTime/actPeriod;      % How many MDP decisions will we make?
 depth = 4;                          % depth of Forward Search
@@ -52,11 +52,13 @@ for t = 0:SIMiters-1
     if mod(t*simPeriod,actPeriod) == 0
         MDPiteration = MDPiteration + 1;
         % calculate the relative state needed for MDP
-        state = getMDPState(agent, obstacles)
+        state = getMDPState(agent, obstacles);
         
         % get an action, either by button press or MDP
 %         action = getNumAction(); % HMI: NumPad
-        [action, anticipatedReward] = selectAction(state, depth, actPeriod) % Forward Search
+        [action, anticipatedReward] = selectAction(state, depth, actPeriod); % Forward Search
+
+        % get actions by the obstacles
         
         % Save action
         actionHist(MDPiteration,:) = action;
@@ -83,8 +85,9 @@ for t = 0:SIMiters-1
     % remove the cars before proceeding to the next iteration
     delete(rectangles);
     % reset action until next 2 second period.
-    action = [0 0];
-    
+    %action = [0 0];
+    % reset lane action until next 2 second period
+    action(1) = 0;
 end
 
 %% Save Data
@@ -101,4 +104,3 @@ while exist(strcat(name,indexChar,'.mat')) == 2
 end
 save(strcat(name,indexChar),'AA228MDP_data');
                    
-
