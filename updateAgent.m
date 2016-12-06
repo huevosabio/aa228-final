@@ -1,7 +1,7 @@
 function agent = updateAgent( simPeriod, agent, action, varargin )
 %UPDATEAGENT Moves the agent according to its state and action
 %
-% Output:   agent 3 x 1 array
+% Output:   agent 1 x 3 array
 %               [ longitudinal position, lane, velocity ]
 %               position in units of meters
 %
@@ -10,7 +10,7 @@ function agent = updateAgent( simPeriod, agent, action, varargin )
 %               [ change lane? , change speed?]
 %               +- 1 to adjust lane or speed
 %
-% Contribtors: John
+% Contributors: John
 %
 
 % constants
@@ -22,7 +22,7 @@ l = 1;              % initial lane of agent
 
 %   If no input args, initialize the agent
 if nargin == 1
-    agent = nan(3,1);
+    agent = nan(1,3);
     agent(1) = x;
     agent(2) = l;
     agent(3) = v;
