@@ -17,6 +17,8 @@ if nargin == 0
     % create the figure with some properties
     % Road is 1000 meters long and 3*4 meters wide (+ 4 m grass x 2) = 20
     world = figure('Name', 'AA228 Road', 'Position',[0 200 1000*10 20*10]);
+    h = gca;
+    h.Position = [0 0 1 1];
     hold on;
     % draw the grass
     grass  = rectangle('Position',[0 0 1000 20], 'FaceColor','g');
