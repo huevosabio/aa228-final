@@ -46,9 +46,9 @@ else % must have agent and action input
     
     % respond to change speed action
     agent(3) = agent(3) + action(2) * simPeriod;
-    if agent(3) < 0
-        agent(3) = 0; % don't move backwards
-    end
+    %if agent(3) < 0
+    %    agent(3) = 0; % don't move backwards
+    %end
 end
 
 end % EOF

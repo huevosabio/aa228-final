@@ -1,4 +1,4 @@
-function [ obstacles ] = updateObstacles(simPeriod, obstacles, varargin)
+function [ obstacles ] = updateObstacles(simPeriod, obstacles, obsActions, varargin)
 %updateObstaclePositions Moves the vehicles in the obtsacles matrix
 %according to their velocities and the elapsed time between iterations
 
@@ -13,13 +13,13 @@ function [ obstacles ] = updateObstacles(simPeriod, obstacles, varargin)
 %
 
 %% constants
-numObs = 30;                        % number of vehicles on our road
+numObs = 20;                        % number of vehicles on our road
 trackLength = 1000;                 % length of track in meters
 lanes = 3;                          % number of lanes in our road
 aveV = 20;                          % average speed of vehicles on the road
 sigmaV = 5;                         % deviation of speeds of vehicles on the road
 setUpMode = 1;                      %   1: random instruders;
-randomActionProb = 0.9;                   % Probability that it will execute a random action, set 0.0 to make it deterministic
+randomActionProb = 0.1;                   % Probability that it will execute a random action, set 0.0 to make it deterministic
                                     %   2: intruders init according to matrix defineIntruders
 %defineIntruders = [ 100, 1, 0;...   
 %                    100, 2, 0];     % 2 non-moving intruders - needs to change lane twice
@@ -54,17 +54,28 @@ if nargin == 1
     end
     
 % If 'obstacles' is passed in, push them forward according to their speeds
+% NOTE: this could be vectorized
 else
     for i = 1:size(obstacles,1)
-        % if 
+        %propagate lane changes
+        obstacles(i,2) = obstacles(i,2) + obsActions(i,1);
+        if     obstacles(i,2) > 3 % don't go outside of road - or maybe allow grass?
+            obstacles(i,2) = 3;
+        elseif obstacles(i,2) < 1
+            obstacles(i,2) = 1;
+        end
+
+
         % propogate longitudinal postion according to speed
-        obstacles(i,1) = obstacles(i,1) + simPeriod*obstacles(i,3);
+        obstacles(i,1) = obstacles(i,1) + obstacles(i,3)*simPeriod + 0.5 * obsActions(i,2) * simPeriod^2;
         % if vehicle goes beyond the track
         if obstacles(i,1) > 1000
             obstacles(i,1) = obstacles(i,1) - 1000; % send to beginning
         elseif obstacles(i,1) < 0
             obstacles(i,1) = obstacles(i,1) + 1000; % or send to end
         end
+
+        obstacles(i,3) = obstacles(i,3) + obsActions(i,2) * simPeriod;
     end
 end
 

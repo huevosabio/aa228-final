@@ -10,6 +10,8 @@ function availableActions = getAvailableActions(state)
 
 % Contribtors: Ramon, John, Molly
 
+% NOTE: other functions are using the fact that the first action is [0, 0]
+
 % switch on the current lane of the agent
 switch state(1,2)
     case 1 % lane = 1

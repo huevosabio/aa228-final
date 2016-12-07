@@ -16,6 +16,7 @@ SIMiters = playTime/simPeriod;      % How many simPeriods will we run?
 MDPiters = playTime/actPeriod;      % How many MDP decisions will we make?
 depth = 4;                          % depth of Forward Search
 rewards = 0;                        % init rewards history vector, one entry for 2 sec time step
+randomActionProb = 0.0;             % prob that an obstacle it will execute a random aciton other than [0 0]
 
 %% Initialize the simulation
 % open the 'AA228 Road' figure and draw the road (world holds handle)
@@ -59,13 +60,14 @@ for t = 0:SIMiters-1
         [action, anticipatedReward] = selectAction(state, depth, actPeriod); % Forward Search
 
         % get actions by the obstacles
+        obsActions = getObstacleActions(obstacles, randomActionProb);
         
         % Save action
         actionHist(MDPiteration,:) = action;
     end
     
     % propogate obstacles forward
-    obstacles = updateObstacles(simPeriod, obstacles );
+    obstacles = updateObstacles(simPeriod, obstacles, obsActions );
     agent = updateAgent(simPeriod, agent, action );
     
     % add the reward associated with this state-action
@@ -88,6 +90,7 @@ for t = 0:SIMiters-1
     %action = [0 0];
     % reset lane action until next 2 second period
     action(1) = 0;
+    obsActions(:,1) = 0;
 end
 
 %% Save Data
