@@ -14,34 +14,41 @@ function availableActions = getAvailableActions(state)
 switch state(1,2)
     case 1 % lane = 1
         availableActions = [0 0;        %       no action
-                            0 -10;      %               deccelerate 10
-                            0 -5;       %               deccelerate 5
+                            0 -8;      %               deccelerate 10
+                            0 -2;       %               deccelerate 5
                             0 1;        %               accelerate
-                            1 -10;      % lane up,      deccelerate 10
-                            1 -5;       % lane up,      deccelerate 5
+                            0 2;        %               accelerate
+                            1 -8;      % lane up,      deccelerate 10
+                            1 -2;       % lane up,      deccelerate 5
                             1 1;        % lane up,      accelerate
+                            1 2;        % lane up,      accelerate
                             1 0];       % lane up
     case 2 % lane = 2
         availableActions = [0 0;        %       no action
-                            0 -10;      %               deccelerate 10
-                            0 -5;       %               deccelerate 5
+                            0 -8;      %               deccelerate 10
+                            0 -2;       %               deccelerate 5
                             0 1;        %               accelerate
-                            -1 -10;     % lane down,    deccelerate 10 
-                            -1 -5;      % lane down,    deccelerate 5
+                            0 2;        %               accelerate
+                            -1 -8;     % lane down,    deccelerate 10 
+                            -1 -2;      % lane down,    deccelerate 5
                             -1 1;       % lane down,    accelerate
+                            -1 2;       % lane down,    accelerate
                             -1 0;       % lane down
-                            1 -10;      % lane up,      deccelerate 10
-                            1 -5;       % lane up,      deccelerate 5
+                            1 -8;      % lane up,      deccelerate 10
+                            1 -2;       % lane up,      deccelerate 5
                             1 1;        % lane up,      accelerate
+                            1 2;        % lane up,      accelerate
                             1 0];       % lane up
     case 3 % lane = 3
         availableActions = [0 0;        %       no action
-                            0 -10;      %               deccelerate 10
-                            0 -5;       %               deccelerate 5
+                            0 -8;      %               deccelerate 10
+                            0 -2;       %               deccelerate 5
                             0 1;        %               accelerate
-                            -1 -10;     % lane down,    deccelerate 10 
-                            -1 -5;      % lane down,    deccelerate 5
+                            0 2;        %               accelerate
+                            -1 -8;     % lane down,    deccelerate 10 
+                            -1 -2;      % lane down,    deccelerate 5
                             -1 1;       % lane down,    accelerate
+                            -1 2;       % lane down,    accelerate
                             -1 0];      % lane down
                         
 end

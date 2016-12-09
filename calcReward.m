@@ -1,4 +1,4 @@
-function newReward = calcReward(state, action)
+function newReward = calcReward(state, action, real)
 %CALCREWARDS calculates the new reward for update in the scoreboad and for
 %use in selectAction
 %
@@ -29,6 +29,11 @@ carLength = 6;
 
 %% loop over each intruder to find crashes
 for i = 1:intruders
+    
+    if state(i+1,2) == -99 && real == 1
+        break; % no longer dealing with real intruders
+    end
+    
     % if deltaPos_1 * deltaPos_2 < 0,
     % and deltaLane + laneChangeAction == 0, agent and intruder crashed
     % x = (1/2)a * t^2 + v * t + x
