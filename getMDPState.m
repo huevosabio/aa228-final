@@ -1,4 +1,4 @@
-function state = getMDPState(agent, obstacles)
+function state = getMDPState(agent, obstacles, spoofIntruders)
 %GETMDPSTATE prepares the MDP state for Forward Search
 %
 % Given information about the agent's and obstacles' absolute positions,
@@ -48,6 +48,24 @@ for i = 1:numObs
         % wish I was smart enough to pre-allocate...
         state = [ state ; dPos dLane dV ];
     end
+end
+
+if spoofIntruders == 1 % add probabilitistic obstacles beyond visible horizon
+    
+    numObsNearby = size(state,1)-1;
+    probObs = numObsNearby;       % half as many as are visible around agent
+    state = [ state; 0 -99 0];
+    if probObs ~= 0
+        dV = mean(state(2:numObsNearby+1,3));   % use average of visible car's
+        for i = 1:probObs
+            dPos = -dPosMax*(1+2*rand);             % rand between dPosMax and 2*dPosMax away
+            dLane = agent(2) - randi(3);            % place into a random lane
+        %     dLane = i-1; % cheating?
+            state = [ state; dPos dLane dV];
+        end
+    end
+
+    %state = [state; -3*dPosMax -1 dV; -3*dPosMax 0 dV; -3*dPosMax 1 dV]; % cheating?
 end
 
 end

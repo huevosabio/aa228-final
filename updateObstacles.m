@@ -14,12 +14,12 @@ function [ obstacles ] = updateObstacles(simPeriod, obstacles, varargin)
 
 %% constants
 numObs = 30;                        % number of vehicles on our road
-trackLength = 1000;                 % length of track in meters
+length = 1000;                       % length of track in meters
 lanes = 3;                          % number of lanes in our road
 aveV = 20;                          % average speed of vehicles on the road
 sigmaV = 5;                         % deviation of speeds of vehicles on the road
 setUpMode = 1;                      %   1: random instruders;
-randomActionProb = 0.9;                   % Probability that it will execute a random action, set 0.0 to make it deterministic
+
                                     %   2: intruders init according to matrix defineIntruders
 %defineIntruders = [ 100, 1, 0;...   
 %                    100, 2, 0];     % 2 non-moving intruders - needs to change lane twice
@@ -45,7 +45,7 @@ if nargin == 1
         normV = normrnd(aveV,sigmaV,numObs);
         for i = 1:numObs
            % populate with positions and speeds
-           obstacles(i,1) = rand*trackLength;
+           obstacles(i,1) = rand*length;
            obstacles(i,2) = randi(lanes);
            obstacles(i,3) = abs(normV(i)); %no negative speeds
         end
@@ -60,10 +60,10 @@ else
         % propogate longitudinal postion according to speed
         obstacles(i,1) = obstacles(i,1) + simPeriod*obstacles(i,3);
         % if vehicle goes beyond the track
-        if obstacles(i,1) > 1000
-            obstacles(i,1) = obstacles(i,1) - 1000; % send to beginning
+        if obstacles(i,1) > length
+            obstacles(i,1) = obstacles(i,1) - length; % send to beginning
         elseif obstacles(i,1) < 0
-            obstacles(i,1) = obstacles(i,1) + 1000; % or send to end
+            obstacles(i,1) = obstacles(i,1) + length; % or send to end
         end
     end
 end

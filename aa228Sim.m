@@ -9,13 +9,14 @@ close all;          % reset the game and all figures
 clear obstacles;    % forget last sim's obstacles
 
 %% Constants and variables
-simPeriod = .05;                    % 10 msec, length of time between dynamic sims
+simPeriod = .05;                    % 50 msec, length of time between dynamic sims
 actPeriod = 2;                      % 2 sec, take an action every 2 seconds
 playTime = 100;                      % How many seconds to play a round?
 SIMiters = playTime/simPeriod;      % How many simPeriods will we run?
 MDPiters = playTime/actPeriod;      % How many MDP decisions will we make?
 depth = 4;                          % depth of Forward Search
 rewards = 0;                        % init rewards history vector, one entry for 2 sec time step
+spoofIntruders = 1;                 % 1 to put spoofed intruders into horizon
 
 %% Initialize the simulation
 % open the 'AA228 Road' figure and draw the road (world holds handle)
@@ -44,7 +45,7 @@ for t = 0:SIMiters-1
     % draw obstacles and agent
     [rectangles, handles] = drawWorld(obstacles, agent, rectangles, rewards, world, score);
     % pause for some fraction of a second
-    pause(simPeriod);    
+    pause(.3*simPeriod);    % correct for MDP calculation time
     
     %% call for new action, propogate cars, calc reward
     
@@ -52,7 +53,7 @@ for t = 0:SIMiters-1
     if mod(t*simPeriod,actPeriod) == 0
         MDPiteration = MDPiteration + 1;
         % calculate the relative state needed for MDP
-        state = getMDPState(agent, obstacles);
+        state = getMDPState(agent, obstacles, spoofIntruders);
         
         % get an action, either by button press or MDP
 %         action = getNumAction(); % HMI: NumPad
@@ -70,12 +71,13 @@ for t = 0:SIMiters-1
     
     % add the reward associated with this state-action
     if mod(t*simPeriod,actPeriod) == 0
-        newReward = calcReward(state, action);
+        newReward = calcReward(state, action, 1);
         
         % for scoreboard graphic only
         rewards = [ rewards, rewards(end)+newReward ];
         figure(score);
         plot(rewards,'LineWidth',2);
+        title('Cumulative Reward vs. Time');
         
         % save reward
         rewardHist(MDPiteration) = newReward;
